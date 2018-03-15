@@ -72,6 +72,8 @@ var ModalBox = createReactClass({
         onClosed: PropTypes.func,
         onOpened: PropTypes.func,
         onClosingState: PropTypes.func,
+        wrapperOpacity: PropTypes.number
+
     },
 
     getDefaultProps: function () {
@@ -89,6 +91,7 @@ var ModalBox = createReactClass({
             backButtonClose: false,
             easing: Easing.elastic(0.8),
             coverScreen: false,
+            wrapperOpacity: 1,
             keyboardTopOffset: Platform.OS == 'ios' ? 22 : 0
         };
     },
@@ -422,11 +425,12 @@ var ModalBox = createReactClass({
     renderContent() {
         var size    = {height: this.state.containerHeight, width: this.state.containerWidth};
         var offsetX = (this.state.containerWidth - this.state.width) / 2;
+        var {wrapperOpacity} = this.props;
 
         return (
             <Animated.View
                 onLayout={this.onViewLayout}
-                style={[styles.wrapper, size, this.props.style, {transform: [{translateY: this.state.position}, {translateX: offsetX}]} ]}
+                style={[styles.wrapper, size, this.props.style, {transform: [{translateY: this.state.position}, {translateX: offsetX}]}, {opacity : wrapperOpacity}  ]}
                 {...this.state.pan.panHandlers}>
                 {this.props.children}
             </Animated.View>
