@@ -17,6 +17,7 @@ var {
     Keyboard
 } = require('react-native');
 
+var {focusOnView} = require('react-native-accessibility');
 
 var createReactClass = require('create-react-class');
 
@@ -255,6 +256,8 @@ var ModalBox = createReactClass({
                 if (!this.state.isOpen && this.props.onOpened) this.props.onOpened();
                 this.state.isAnimateOpen = false;
                 this.state.isOpen = true;
+                focusOnView(this.contentRef)
+
             });
         })
 
@@ -462,7 +465,10 @@ var ModalBox = createReactClass({
         if (!visible) return <View/>
 
         var content = (
-            <View importantForAccessibility="yes" accessibilityViewIsModal={true} style={[styles.transparent, styles.absolute]} pointerEvents={'box-none'}>
+            <View ref={contentRef => {
+                if(contentRef)
+                    this.contentRef = contentRef
+            }} importantForAccessibility="yes" accessibilityViewIsModal={true} style={[styles.transparent, styles.absolute]} pointerEvents={'box-none'}>
               <View style={{ flex: 1 }} pointerEvents={'box-none'} onLayout={this.onContainerLayout}>
                   {visible && this.renderBackdrop()}
                   {visible && this.renderContent()}
