@@ -17,7 +17,7 @@ var {
     Keyboard
 } = require('react-native');
 
-var {focusOnView} = require('react-native-accessibility');
+var focusOnView = require('react-native-accessibility').focusOnView;
 
 var createReactClass = require('create-react-class');
 
