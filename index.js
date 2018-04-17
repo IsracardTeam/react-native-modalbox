@@ -73,7 +73,8 @@ var ModalBox = createReactClass({
         onClosed: PropTypes.func,
         onOpened: PropTypes.func,
         onClosingState: PropTypes.func,
-        wrapperOpacity: PropTypes.number
+        wrapperOpacity: PropTypes.number,
+        screenReaderEnabled: PropTypes.bool
 
     },
 
@@ -93,6 +94,7 @@ var ModalBox = createReactClass({
             easing: Easing.elastic(0.8),
             coverScreen: false,
             wrapperOpacity: 1,
+            screenReaderEnabled: false,
             keyboardTopOffset: Platform.OS == 'ios' ? 22 : 0
         };
     },
@@ -412,13 +414,18 @@ var ModalBox = createReactClass({
         var backdrop  = null;
 
         if (this.props.backdrop) {
-            backdrop = (
+            backdrop = !this.props.screenReaderEnabled ? (
                 <TouchableWithoutFeedback onPress={this.props.backdropPressToClose ? this.close : null}>
-                  <Animated.View importantForAccessibility="no" style={[styles.absolute, {opacity: this.state.backdropOpacity}]}>
-                    <View style={[styles.absolute, {backgroundColor:this.props.backdropColor, opacity: this.props.backdropOpacity}]}/>
-                      {this.props.backdropContent || []}
-                  </Animated.View>
+                    <Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
+                        <View style={[styles.absolute, { backgroundColor: this.props.backdropColor, opacity: this.props.backdropOpacity }]} />
+                        {this.props.backdropContent || []}
+                    </Animated.View>
                 </TouchableWithoutFeedback>
+            ) :
+                (<Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
+                    <View style={[styles.absolute, { backgroundColor: this.props.backdropColor, opacity: this.props.backdropOpacity }]} />
+                    {this.props.backdropContent || []}
+                </Animated.View>)
             );
         }
 
