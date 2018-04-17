@@ -258,7 +258,12 @@ var ModalBox = createReactClass({
                 if (!this.state.isOpen && this.props.onOpened) this.props.onOpened();
                 this.state.isAnimateOpen = false;
                 this.state.isOpen = true;
+                Platform.OS === "ios" ?
                 focusOnView(this.contentRef)
+                :
+                setTimeout(() => {
+                    focusOnView(this.contentRef)
+                }, 2000);
 
             });
         })
