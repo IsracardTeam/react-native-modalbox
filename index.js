@@ -263,7 +263,7 @@ var ModalBox = createReactClass({
                 :
                 setTimeout(() => {
                     focusOnView(this.contentRef)
-                }, 2000);
+                }, 3000);
 
             });
         })
