@@ -410,26 +410,21 @@ var ModalBox = createReactClass({
     /*
      * Render the backdrop element
      */
-    renderBackdrop: function() {
-        var backdrop  = null;
-
-        if (this.props.backdrop) {
-            backdrop = !this.props.screenReaderEnabled ? (
-                <TouchableWithoutFeedback onPress={this.props.backdropPressToClose ? this.close : null}>
-                    <Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
-                        <View style={[styles.absolute, { backgroundColor: this.props.backdropColor, opacity: this.props.backdropOpacity }]} />
-                        {this.props.backdropContent || []}
-                    </Animated.View>
-                </TouchableWithoutFeedback>
-            ) :
-                (<Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
+    renderBackdrop: function () {
+        if (!this.props.backdrop) return null
+        
+        return !this.props.screenReaderEnabled ? (
+            <TouchableWithoutFeedback onPress={this.props.backdropPressToClose ? this.close : null}>
+                <Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
+                    <View style={[styles.absolute, { backgroundColor: this.props.backdropColor, opacity: this.props.backdropOpacity }]} />
+                    {this.props.backdropContent || []}
+                </Animated.View>
+            </TouchableWithoutFeedback>
+        ) : (
+                <Animated.View importantForAccessibility="no" style={[styles.absolute, { opacity: this.state.backdropOpacity }]}>
                     <View style={[styles.absolute, { backgroundColor: this.props.backdropColor, opacity: this.props.backdropOpacity }]} />
                     {this.props.backdropContent || []}
                 </Animated.View>)
-            );
-        }
-
-        return backdrop;
     },
 
     renderContent() {
