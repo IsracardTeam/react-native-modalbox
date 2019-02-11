@@ -10,7 +10,6 @@ var {
     TouchableWithoutFeedback,
     Dimensions,
     Easing,
-    BackAndroid,
     BackHandler,
     Platform,
     Modal,
@@ -21,7 +20,7 @@ var focusOnView = require('react-native-accessibility').focusOnView;
 
 var createReactClass = require('create-react-class');
 
-var BackButton = BackHandler || BackAndroid;
+var BackButton = BackHandler;
 
 var screen = Dimensions.get('window');
 
